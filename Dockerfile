@@ -22,3 +22,12 @@ COPY flutter-sdk/ /flutter-sdk
 # extract stuff
 RUN cd /flutter-sdk/android-sdk; unzip /downloads/android-sdk.zip 
 RUN cd /flutter-sdk; tar -xvf /downloads/flutter-sdk.tar.xz
+
+ENV FLUTTER_HOME=/flutter-sdk/flutter
+ENV ANDROID_HOME=/flutter-sdk/android-sdk
+
+ENV PATH=$PATH:$FLUTTER_HOME/bin:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin
+
+RUN yes | sdkmanager --licenses
+RUN sdkmanager 'platforms;android-28' platform-tools 'build-tools;28.0.2'
+RUN sdkmanager --update
