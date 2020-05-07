@@ -1,3 +1,7 @@
+.PHONY: build
+
+build: flutter-sdk/.keep downloads/android-sdk.zip downloads/flutter-sdk.tar.xz Dockerfile
+	docker build .
 
 %/.keep:
 	mkdir $*
