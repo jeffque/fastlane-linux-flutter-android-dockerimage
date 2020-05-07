@@ -20,5 +20,5 @@ COPY downloads/ /downloads
 COPY flutter-sdk/ /flutter-sdk
 
 # extract stuff
-RUN cd /flutter-sdk; unzip /downloads/android-sdk.zip 
+RUN cd /flutter-sdk/android-sdk; unzip /downloads/android-sdk.zip 
 RUN cd /flutter-sdk; tar -xf /downloads/flutter-sdk.tar.xz
