@@ -1,7 +1,10 @@
 .PHONY: build clean
 
-build: flutter-sdk/.keep flutter-sdk/android-sdk/.keep downloads/android-sdk.zip downloads/flutter-sdk.tar.xz Dockerfile
+build: .build
+
+.build: flutter-sdk/.keep flutter-sdk/android-sdk/.keep downloads/android-sdk.zip downloads/flutter-sdk.tar.xz Dockerfile
 	docker build .
+	touch .build
 
 clean:
 	rm -r downloads/ flutter-sdk/
