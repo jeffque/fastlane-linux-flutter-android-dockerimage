@@ -29,5 +29,5 @@ ENV ANDROID_HOME=/flutter-sdk/android-sdk
 ENV PATH=$PATH:$FLUTTER_HOME/bin:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin
 
 RUN yes | sdkmanager --licenses
-RUN sdkmanager 'platforms;android-28' platform-tools 'build-tools;28.0.2'
+RUN sdkmanager 'platforms;android-28' platform-tools 'build-tools;28.0.3'
 RUN sdkmanager --update
