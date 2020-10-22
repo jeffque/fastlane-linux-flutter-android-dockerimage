@@ -1,5 +1,8 @@
 .PHONY: build clean
 
+FLUTTER_VERSION=1.22.2-stable
+FLUTTER_DOWNLOAD_URL=https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_$(FLUTTER_VERSION).tar.xz
+
 build: .build
 
 .build: flutter-sdk/.keep flutter-sdk/android-sdk/.keep downloads/android-sdk.zip downloads/flutter-sdk.tar.xz Dockerfile
@@ -20,5 +23,5 @@ downloads/android-sdk.zip: downloads/.keep
 	touch $@
 
 downloads/flutter-sdk.tar.xz: downloads/.keep
-	wget https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_v1.12.13+hotfix.9-stable.tar.xz -O downloads/flutter-sdk.tar.xz
+	wget $(FLUTTER_DOWNLOAD_URL) -O $@
 	touch $@
