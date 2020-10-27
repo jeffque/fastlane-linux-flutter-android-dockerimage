@@ -22,6 +22,9 @@ downloads/android-sdk.zip: downloads/.keep
 	wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -O downloads/android-sdk.zip
 	touch $@
 
-downloads/flutter-sdk.tar.xz: downloads/.keep
+downloads/flutter-sdk$(FLUTTER_VERSION).tar.xz: downloads/.keep
 	wget $(FLUTTER_DOWNLOAD_URL) -O $@
+
+downloads/flutter-sdk.tar.xz: downloads/flutter-sdk$(FLUTTER_VERSION).tar.xz
+	ln $< $@
 	touch $@
