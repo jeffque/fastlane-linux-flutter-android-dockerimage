@@ -1,4 +1,4 @@
-.PHONY: build clean
+.PHONY: build prepare clean
 
 FLUTTER_VERSION=1.22.2-stable
 FLUTTER_DOWNLOAD_URL=https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_$(FLUTTER_VERSION).tar.xz
@@ -6,9 +6,11 @@ ANDROID_SDKTOOLS_DOWNLOAD_URL=https://dl.google.com/android/repository/commandli
 
 build: .build
 
-.build: flutter-sdk/.keep flutter-sdk/android-sdk/.keep downloads/android-sdk.zip downloads/flutter-sdk.tar.xz Dockerfile
+.build: prepare Dockerfile
 	docker build .
 	touch .build
+
+prepare: flutter-sdk/.keep flutter-sdk/android-sdk/.keep downloads/android-sdk.zip downloads/flutter-sdk.tar.xz
 
 clean:
 	rm -r downloads/ flutter-sdk/
