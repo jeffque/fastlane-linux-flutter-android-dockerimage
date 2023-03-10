@@ -20,7 +20,8 @@ COPY downloads/ /downloads
 COPY flutter-sdk/ /flutter-sdk
 
 # extract stuff
-RUN cd /flutter-sdk/android-sdk;\
+RUN git config --global --add safe.directory /flutter-sdk/flutter;\
+       cd /flutter-sdk/android-sdk;\
        unzip /downloads/android-sdk.zip;\
        rm /downloads/android-sdk.zip;\
        mkdir tmp;\

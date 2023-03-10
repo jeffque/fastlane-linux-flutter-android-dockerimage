@@ -1,7 +1,7 @@
 .PHONY: build prepare clean
 
-FLUTTER_VERSION=1.22.2-stable
-FLUTTER_DOWNLOAD_URL=https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_$(FLUTTER_VERSION).tar.xz
+FLUTTER_VERSION=2.5.0-stable
+FLUTTER_DOWNLOAD_URL=https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_$(FLUTTER_VERSION).tar.xz
 ANDROID_SDKTOOLS_DOWNLOAD_URL=https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip
 
 build: .build
