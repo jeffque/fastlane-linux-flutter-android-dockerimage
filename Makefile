@@ -4,10 +4,16 @@ FLUTTER_VERSION=2.5.0-stable
 FLUTTER_DOWNLOAD_URL=https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_$(FLUTTER_VERSION).tar.xz
 ANDROID_SDKTOOLS_DOWNLOAD_URL=https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip
 
+
+# these vars are assigned during GitHub Workflow - CI
+IMAGE_VERSION=
+REGISTRY=
+REPO_NAME=
+
 build: .build
 
 .build: prepare Dockerfile
-	docker build .
+	docker build -t $(REGISTRY)/$(REPO_NAME):$(IMAGE_VERSION) -t $(REGISTRY)/$(REPO_NAME):latest .
 	touch .build
 
 prepare: flutter-sdk/.keep flutter-sdk/android-sdk/.keep downloads/android-sdk.zip downloads/flutter-sdk.tar.xz
