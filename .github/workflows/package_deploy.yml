@@ -1,0 +1,53 @@
+name: Deploy Image to GitHub Packages
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+  REGISTRY: ghcr.io
+  REPO_NAME: ${{ github.repository }}
+  IMAGE_VERSION: 0.0.2
+
+
+jobs:
+  push_image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Lower case REPO_NAME
+        run: |
+          echo "REPO_NAME=$(echo $REPO_NAME | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Update Makefile Variables
+        run: |
+          sed -i "s#^REGISTRY=.*#REGISTRY=${REGISTRY}#" Makefile
+          sed -i "s#^REPO_NAME=.*#REPO_NAME=${REPO_NAME}#" Makefile
+          sed -i "s#^IMAGE_VERSION=.*#IMAGE_VERSION=${IMAGE_VERSION}#" Makefile
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check Docker Image Existence
+        run: |
+          if docker pull "$REGISTRY/$REPO_NAME:$IMAGE_VERSION"; then
+            echo "Version already built $REGISTRY/$REPO_NAME:$IMAGE_VERSION, aborting." >&2
+            exit 1
+          fi
+
+      - name: Build Docker Image using Makefile
+        run: make build
+
+      - name: Push Image to GitHub Packages
+        run: |
+          echo "$REGISTRY/$REPO_NAME:$IMAGE_VERSION"
+          docker push "$REGISTRY/$REPO_NAME:$IMAGE_VERSION"
+          docker push "$REGISTRY/$REPO_NAME:latest"
